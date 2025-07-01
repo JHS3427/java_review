@@ -133,7 +133,7 @@ public class ScoreTestVer3 {
 						System.out.println("계속 검색? 계속하려면 n빼고 아무거나, 아니면 n ");
 						if(scan.next().equals("n"))
 						{
-							System.out.println()
+							System.out.println();
 						}
 					}//while
 				}//if null
