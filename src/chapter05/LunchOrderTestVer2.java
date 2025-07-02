@@ -17,8 +17,8 @@ public class LunchOrderTestVer2 {
 		System.out.println("**************************************");
 		System.out.println("\t Welcome to Food Market!!!!!!!");
 		System.out.println("**************************************");
-		System.out.println("\t 1. 햄버거(🍔) \t 2. 피자(🍕)");
-		System.out.println("\t 3. 라면(🍜) \t 4. 샐러드(🥗)");
+		System.out.println("\t 1. 햄버거(🍔):100 \t 2. 피자(🍕):200");
+		System.out.println("\t 3. 라면(🍜):300 \t 4. 샐러드(🥗):400");
 		System.out.println("\t 9. 나가기");
 		System.out.println("**************************************");
 		

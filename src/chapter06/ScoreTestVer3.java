@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 /*
  * ScoreTestVer2의 결과에 메뉴를 추가하자
+ * - 학생 성적 수정 메뉴를 추가한다.(수정 = 검색 + 등록)
+ * - 학생명 및 점수 삭제 메뉴를 추가한다.(검색 + 변경)
+ * 삭제의 경우 null이 중간에 들어가면 안되므로 각 데이터의 index를 앞으로 떙겨야 한다.
  */
 public class ScoreTestVer3 {
 
@@ -38,6 +41,8 @@ public class ScoreTestVer3 {
 			System.out.println(" 1. 학생 등록 ");
 			System.out.println(" 2. 학생 리스트 출력 ");
 			System.out.println(" 3. 학생 성적 검색 ");
+			System.out.println(" 4. 학생 성적 수정 ");
+			System.out.println(" 5. 학생 삭제 ");
 			System.out.println(" 9. 프로그램 종료 ");
 			System.out.println("****************************");
 			System.out.print("메뉴선택(숫자) : ");
@@ -77,7 +82,7 @@ public class ScoreTestVer3 {
 				//if(nameList[0]!=null)
 				if(count!=0) //이렇게 하면 위보다 빠름(위는 stack>Heap>0번 / 아래는 stack으로 끝)
 				{
-					for(int i=0;i<nameList.length;i++)
+					for(int i=0;i<count;i++)
 					{ // 이름이 null이 아닌 경우에만 해당 내용을 출력
 						if(nameList[i]!=null)
 						{
@@ -137,6 +142,107 @@ public class ScoreTestVer3 {
 						}
 					}//while
 				}//if null
+			}
+			else if(menu==4) // 학생 성적 수정
+			{
+				// 순서 - 수정할 학생명이 존재하는지 존재여부 확인.
+				// 있는 경우 : 학생의 새로운 성적 입력 후 수정.
+				// 없는 경우 : 수정불가 > 검색 데이터 존재 X. 다시 입력할지 질문.
+				boolean modiFlag = true;
+				while(modiFlag)
+				{
+					if(count!=0)
+					{
+						System.out.println("수정");
+						System.out.println("(수정)학생명 검색 : ");
+						String modifiedName = scan.next();
+						int modiIdx = -1;
+						for(int i = 0 ; i < count ; i++)
+						{
+							if(nameList[i].equals(modifiedName))
+							{
+								modiIdx = i;
+							}
+						}
+						if(modiIdx == -1)
+						{
+							System.out.println("수정할 데이터가 존재하지 않습니다, 다시 입력해주세요");
+						}
+						else
+						{
+							System.out.println("국어 > ");
+							korList[modiIdx] = scan.nextInt();
+							
+							System.out.println("영어 > ");
+							engList[modiIdx] = scan.nextInt();
+							
+							System.out.println("수학> ");
+							mathList[modiIdx] = scan.nextInt();
+							
+							totList[modiIdx] = korList[modiIdx] + engList[modiIdx] + mathList[modiIdx];
+							avgList[modiIdx] = totList[modiIdx]/3;
+							System.out.println("수정왼료");
+							System.out.println("계속 수정 하겠습니까? 싫으면 n");
+							if(scan.next().equals("n"))
+							{
+								modiFlag = false;
+							}
+						}
+					}
+					else
+					{
+						System.out.println("등록된 데이터가 없습니다.");
+						modiFlag = false;						
+					}
+				}
+			}
+			else if(menu == 5)
+			{
+				System.out.print("학생삭제");
+				if(count != 0)
+				{
+					boolean deleteFlag = true;
+					while(deleteFlag)
+					{
+						System.out.print("(삭제) 학생명 검색 : ");
+						String deleteName = scan.next();
+						int deleteIdx = -1;
+						for(int i =0; i<count;i++)
+						{
+							if(nameList[i].equals(deleteName))
+							{
+								deleteIdx = i;
+							}
+						}
+						if(deleteIdx!=-1)
+						{
+							for(int j = deleteIdx ; j<count;j++)
+							{// 홍길동(0) 이순신(1) 김유신(2) >> 이순신(0) 김유신(1) 김유신(2)
+							 // 마지막꺼는 카운터가 하나 줄었기 때문에 나중에 넣을때 마지막꺼를 덮어써서 괜찮음
+								nameList[j] = nameList[j+1];
+								korList[j] = korList[j+1];
+								engList[j] = engList[j+1];
+								mathList[j] = mathList[j+1];
+								totList[j] = totList[j+1];
+								avgList[j] = avgList[j+1];
+							}
+							count--;
+							System.out.println("계속 수정 하겠습니까? 싫으면 n");
+							if(scan.next().equals("n"))
+							{
+								deleteFlag = false;
+							}
+						}
+						else
+						{
+							System.out.println("삭제할 데이터가 없습니다.");
+						}
+					}//while - deleteFlag
+				}
+				else
+				{
+					System.out.println("등록된 데이터가 없습니다.");
+				}
 			}
 			else if(menu == 9)//프로그램 종료
 			{
